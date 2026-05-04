@@ -2,30 +2,31 @@ package conta_bancaria;
 
 import java.util.Scanner;
 
-import conta_bancaria.model.Conta;
+import conta_bancaria.model.ContaCorrente;
+import conta_bancaria.model.ContaPoupanca;
 import conta_bancaria.util.Cores;
 
 public class Menu {
 
+	private static final Scanner input = new Scanner(System.in);
+
 	public static void main(String[] args) {
 
-		Scanner input = new Scanner(System.in);
+		ContaCorrente cc1 = new ContaCorrente(2, 123, 1, "José da Silva", 0.0f, 1000.0f);
+		cc1.view();
+		cc1.withdraw(12000.0f);
+		cc1.view();
+		cc1.deposit(5000.0f);
+		cc1.view();
+
+		ContaPoupanca cp1 = new ContaPoupanca(3, 123, 2, "Maria dos Santos", 100000.0f, 15);
+		cp1.view();
+		cp1.withdraw(1000.0f);
+		cp1.view();
+		cp1.deposit(5000.0f);
+		cp1.view();
 
 		int option;
-		
-		Conta c1 = new Conta(1, 123, 1, "Adriana Sanches", 10000.0f);
-		
-		c1.view();
-		
-		c1.setBalance(15000.0f);
-		c1.setHolder("Maria Joaquina");
-		c1.view();
-		
-		c1.withdraw(12000.0f);
-		c1.view();
-		
-		c1.deposit(5000.0f);
-		c1.view();
 
 		while (true) {
 
@@ -98,7 +99,6 @@ public class Menu {
 			}
 		}
 	}
-
 
 	public static void about() {
 		System.out.println("\n*********************************************************");
