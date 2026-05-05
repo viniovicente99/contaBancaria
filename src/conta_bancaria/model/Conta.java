@@ -3,14 +3,14 @@ package conta_bancaria.model;
 public abstract class Conta {
 
 	private int number;
-	private int agency;
+	private int branch;
 	private int type;
 	private String holder;
 	private float balance;
 
-	public Conta(int number, int agency, int type, String holder, float balance) {
+	public Conta(int number, int branch, int type, String holder, float balance) {
 		this.number = number;
-		this.agency = agency;
+		this.branch = branch;
 		this.type = type;
 		this.holder = holder;
 		this.balance = balance;
@@ -24,12 +24,12 @@ public abstract class Conta {
 		this.number = number;
 	}
 
-	public int getAgency() {
-		return agency;
+	public int getBranch() {
+		return branch;
 	}
 
-	public void setAgency(int agency) {
-		this.agency = agency;
+	public void setBranch(int branch) {
+		this.branch = branch;
 	}
 
 	public int getType() {
@@ -91,7 +91,7 @@ public abstract class Conta {
 		System.out.println("Dados da Conta:");
 		System.out.println("***********************************************************");
 		System.out.println("Numero da Conta: " + this.number);
-		System.out.println("Agência: " + this.agency);
+		System.out.println("Agência: " + this.branch);
 		System.out.println("Tipo da Conta: " + type);
 		System.out.println("Titular: " + this.holder);
 		System.out.printf("Saldo: R$ %.2f%n", this.balance);

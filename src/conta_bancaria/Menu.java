@@ -3,6 +3,7 @@ package conta_bancaria;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import conta_bancaria.controller.ContaController;
 import conta_bancaria.model.ContaCorrente;
 import conta_bancaria.model.ContaPoupanca;
 import conta_bancaria.util.Cores;
@@ -10,22 +11,11 @@ import conta_bancaria.util.Cores;
 public class Menu {
 
 	private static final Scanner input = new Scanner(System.in);
+	private static final ContaController accountController = new ContaController();
 
 	public static void main(String[] args) {
-
-		ContaCorrente cc1 = new ContaCorrente(2, 123, 1, "José da Silva", 0.0f, 1000.0f);
-		cc1.view();
-		cc1.withdraw(12000.0f);
-		cc1.view();
-		cc1.deposit(5000.0f);
-		cc1.view();
-
-		ContaPoupanca cp1 = new ContaPoupanca(3, 123, 2, "Maria dos Santos", 100000.0f, 15);
-		cp1.view();
-		cp1.withdraw(1000.0f);
-		cp1.view();
-		cp1.deposit(5000.0f);
-		cp1.view();
+		
+		createTestAccounts();
 
 		int option;
 
@@ -71,11 +61,15 @@ public class Menu {
 			switch (option) {
 			case 1:
 				System.out.println(Cores.TEXT_WHITE + "Criar Conta\n\n");
+				
+				registerAccount();
 
 				keyPress();
 				break;
 			case 2:
 				System.out.println(Cores.TEXT_WHITE + "Listar todas as Contas\n\n");
+
+				listAccounts();
 
 				keyPress();
 				break;
@@ -124,6 +118,52 @@ public class Menu {
 		System.out.println("Vinicius Vicente - viniciusr1@genstudents.org");
 		System.out.println("https://github.com/viniovicente99");
 		System.out.println("*********************************************************");
+	}
+
+	private static void listAccounts() {
+
+		accountController.listAll();
+	}
+	
+	public static void registerAccount() {
+		
+		System.out.println("Digite o número da Agência: ");
+		int branch = input.nextInt();
+		
+		System.out.println("Digite o nome do Titular: ");
+		input.skip("\\R");
+		String holder = input.nextLine();
+		
+		System.out.println("Digite o tipo da conta (1 - CC | 2 - CP): ");
+		int type = input.nextInt();
+		
+		System.out.println("Digite o Saldo inicial da conta: ");
+		float balance = input.nextFloat();
+		
+		switch (type) {
+		case 1 -> {
+			System.out.println("Digite o limite da conta: ");
+			float limit = input.nextFloat();
+			accountController.register(new ContaCorrente(accountController.generateNumber(), branch, type, holder, balance, limit));
+		}
+		case 2 -> {
+			System.out.println("Digite o dia do aniversário da conta: ");
+			int anniversary = input.nextInt();
+			accountController.register(new ContaPoupanca(accountController.generateNumber(), branch, type, holder, balance, anniversary));	
+		}
+		default -> System.out.println(Cores.TEXT_RED_BOLD + "Tipo de conta inválido!" + Cores.TEXT_RESET);
+		}
+	}
+	
+	private static void createTestAccounts() {
+	    accountController.register(
+	        new ContaCorrente(accountController.generateNumber(), 123, 1, "João da Silva", 1000.00f, 100.00f));
+	    accountController.register(
+	        new ContaCorrente(accountController.generateNumber(), 456, 1, "Maria dos Santos", 2000.00f, 200.00f));
+	    accountController.register(
+	        new ContaPoupanca(accountController.generateNumber(), 789, 2, "Mariana Hernandez", 10000.00f, 12));
+	    accountController.register(
+	        new ContaPoupanca(accountController.generateNumber(), 123, 2, "Giovanna Giunchetti", 8000.00f, 23));
 	}
 
 	public static void keyPress() {
